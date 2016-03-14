@@ -25,5 +25,17 @@
   "private": true,
   "dependencies": {
     "angular": "^1.5.0"
-  }
+  },
+  "description": "[![devDependency Status](https://david-dm.org/zurb/foundation-apps-template/dev-status.svg)](https://david-dm.org/zurb/foundation-apps-template#info=devDependencies)",
+  "main": "gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marras0914/sw-ffa.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marras0914/sw-ffa/issues"
+  },
+  "homepage": "https://github.com/marras0914/sw-ffa#readme"
 }

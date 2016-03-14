@@ -1,8 +1,6 @@
 
   'use strict';
 
-  // var angular = require('angular');
-
   angular.module('application', [
     'ui.router',
     'ngAnimate',
