@@ -10,17 +10,14 @@ controller: FilmsCtrl
     ui-sref="films({ p: prevPage })">
     Back to Page {{prevPage}}
   </a>
-
   <div class="grid-content shrink">
     <ul class="menu-bar vertical">
       <li ng-repeat="film in films.results | orderBy: 'episode_id'">
         <a ui-sref="films({ id:( film.url | lastdir ), p:'' })">
           {{film.title | capitalize}}
         </a>
-      </li>
     </ul>
   </div>
-
   <a class="button pagination"
     ng-show="nextPage"
     ui-sref="films({ p: nextPage })">

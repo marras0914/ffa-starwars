@@ -1,5 +1,6 @@
 'use strict';
 
+
 var genericController = function ($scope, $state, $http, multiple, single){
 
     // Grab URL parameters
