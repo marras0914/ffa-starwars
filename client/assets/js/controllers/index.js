@@ -17,4 +17,7 @@ angular.module('application')
 	})
 	.controller('StarshipsCtrl', function($scope, $state, $http){
 		$scope = genericController($scope, $state, $http, 'starships', 'starship');
+	})
+	.controller('VehiclesCtrl', function($scope, $state, $http){
+		$scope = genericController($scope, $state, $http, 'vehicles', 'vehicle');
 	});
