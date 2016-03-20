@@ -1,6 +1,7 @@
 'use strict';
 
 var genericController = require('./generic');
+var beerCtrl = require('./beer');
 
 angular.module('application')
 	.controller('FilmsCtrl', function($scope, $state, $http){
@@ -21,6 +22,6 @@ angular.module('application')
 	.controller('VehiclesCtrl', function($scope, $state, $http){
 		$scope = genericController($scope, $state, $http, 'vehicles', 'vehicle');
 	})
-	.controller('BeerCtrl', function($scope, $state, $http){
-		$scope = genericController($scope, $state, $http, 'beers', 'beers');
+	.controller('beerCtrl', function($scope, $state, $http){
+		$scope = beerCtrl($scope, $state, $http, 'beers', 'beers');
 	});
