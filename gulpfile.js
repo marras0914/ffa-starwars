@@ -11,6 +11,7 @@ var gulp     = require('gulp');
 var rimraf   = require('rimraf');
 var router   = require('front-router');
 var sequence = require('run-sequence');
+var webpack  = require('webpack-stream');
 
 // Check for --production flag
 var isProduction = !!(argv.production);
@@ -168,8 +169,8 @@ gulp.task('default', ['server'], function () {
   gulp.watch(['./client/assets/scss/**/*', './scss/**/*'], ['sass']);
 
   // Watch JavaScript
-  gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app']);
-
+  gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app']); 
+  
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy']);
 

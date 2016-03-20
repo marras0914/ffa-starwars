@@ -20,4 +20,7 @@ angular.module('application')
 	})
 	.controller('VehiclesCtrl', function($scope, $state, $http){
 		$scope = genericController($scope, $state, $http, 'vehicles', 'vehicle');
+	})
+	.controller('BeerCtrl', function($scope, $state, $http){
+		$scope = genericController($scope, $state, $http, 'beers', 'beers');
 	});
