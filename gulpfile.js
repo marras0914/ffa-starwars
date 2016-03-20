@@ -145,6 +145,12 @@ gulp.task('uglify:app', function() {
   ;
 });
 
+gulp.task('webpack', function() {
+  return gulp.src(paths.appJS)
+    .pipe(webpack( require('./webpack.config.js') ))
+    .pipe(gulp.dest('./build/assets/js/'));
+});
+
 // Starts a test server, which you can view at http://localhost:8079
 gulp.task('server', ['build'], function() {
   gulp.src('./build')
@@ -170,6 +176,7 @@ gulp.task('default', ['server'], function () {
 
   // Watch JavaScript
   gulp.watch(['./client/assets/js/**/*', './js/**/*'], ['uglify:app']); 
+  gulp.watch(['./build/assets/js/app.js'], ['webpack']); 
   
   // Watch static files
   gulp.watch(['./client/**/*.*', '!./client/templates/**/*.*', '!./client/assets/{scss,js}/**/*.*'], ['copy']);
