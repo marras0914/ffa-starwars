@@ -7,14 +7,14 @@ var beerCtrl = function ($scope, $state, $http, multiple, single){
     $scope.page = ($state.params.p || 1);
 
     // Use Aerobatic's caching if we're on that server
-    var urlApi = "http://swapi.co/api/"+multiple+"/"+$scope.id+"?page="+$scope.page,
-      queryParams = {
-        cache: true
-      };
-    // var urlApi = "http://api.brewerydb.com/v2/?key=7c1b5905b50b778751d381cd69ff2b90"+multiple+"/"+$scope.id+"?page="+$scope.page,
+    // var urlApi = "http://swapi.co/api/"+multiple+"/"+$scope.id+"?page="+$scope.page,
     //   queryParams = {
     //     cache: true
     //   };
+    var urlApi = "https://api.brewerydb.com/v2/beers?styleId=93&abv=6&key=7c1b5905b50b778751d381cd69ff2b90",
+      queryParams = {
+        cache: true
+      };
 
     if (window.location.hostname.match('aerobaticapp')) {
       queryParams = {
@@ -38,7 +38,7 @@ var beerCtrl = function ($scope, $state, $http, multiple, single){
             $scope[single] = data;
 
             var name = data.name;
-            if (single == 'film') name = data.title;
+            if (single == 'beer') name = data.title;
             // Get an image from a Google Custom Search (this API key only works on localhost & aerobaticapp.com)
             var googleUrl = 'https://www.googleapis.com/customsearch/v1?cx=001000040755652345309%3Aosltt3fexvk&q='+encodeURIComponent(name)+'&imgSize=large&num=1&fileType=jpg&key=AIzaSyBDvUGYCJfOyTNoJzk-5P9vE-dllx-Wne4',
               googleParams = { cache: true };
@@ -55,8 +55,8 @@ var beerCtrl = function ($scope, $state, $http, multiple, single){
             }
 
             $http.get(googleUrl, googleParams)
-            .then(function(result) {
-              $scope.imageUrl = result.data.items[0].pagemap.cse_image[0].src;
+            .then(function(data) {
+              $scope.imageUrl = data.data.items[0].pagemap.cse_image[0].src;
             }, function(err) {
               $scope.imageUrl = "Unknown";
             });
