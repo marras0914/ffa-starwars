@@ -1,0 +1,21 @@
+
+<div class="grid-content films" ng-show="films">
+  <a class="button pagination"
+    ng-show="prevPage"
+    ui-sref="films({ p: prevPage })">
+    Back to Page {{prevPage}}
+  </a>
+  <div class="grid-content shrink">
+    <ul class="menu-bar vertical">
+      <li ng-repeat="beer in beers.data">
+        <a ui-sref="beers({ id:( film.url | lastdir ), p:'' })">
+          {{beer.name | capitalize}}
+        </a>
+    </ul>
+  </div>
+  <a class="button pagination"
+    ng-show="nextPage"
+    ui-sref="films({ p: nextPage })">
+    To Page {{nextPage}}
+  </a>
+</div>

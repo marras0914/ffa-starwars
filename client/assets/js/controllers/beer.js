@@ -16,16 +16,16 @@ var beerCtrl = function ($scope, $state, $http, multiple, single){
         cache: true
       };
 
-    if (window.location.hostname.match('aerobaticapp')) {
-      queryParams = {
-        params: {
-          url: urlApi,
-          cache: 1,
-          ttl: 30000 // cache for 500 minutes
-        }
-      }
-      urlApi = '/proxy';
-    }
+    // if (window.location.hostname.match('aerobaticapp')) {
+    //   queryParams = {
+    //     params: {
+    //       url: urlApi,
+    //       cache: 1,
+    //       ttl: 30000 // cache for 500 minutes
+    //     }
+    //   }
+    //   urlApi = '/proxy';
+    // }
 
     if ($scope.page == 1) {
       if ($scope.id != '') {
