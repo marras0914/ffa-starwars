@@ -11,10 +11,7 @@ var genericController = function ($scope, $state, $http, multiple, single){
       queryParams = {
         cache: true
       };
-    // var urlApi = "http://api.brewerydb.com/v2/?key=7c1b5905b50b778751d381cd69ff2b90"+multiple+"/"+$scope.id+"?page="+$scope.page,
-    //   queryParams = {
-    //     cache: true
-    //   };
+  
 
     if (window.location.hostname.match('aerobaticapp')) {
       queryParams = {

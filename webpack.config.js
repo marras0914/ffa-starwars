@@ -8,9 +8,9 @@ module.exports = {
         // vendor: ['angular']  
     },
     output: {
-        path: __dirname + '/build/assets/js',
+        path: __dirname + '/public/assets/js',
         filename: 'app.bundle.js'
-    },
+    }
    // plugins: [
    //      new webpack.optimize.CommonsChunkPlugin( chunkName= "vendor", /* filename= */"vendor.bundle.js")
    // ]

@@ -44,43 +44,44 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	  'use strict';
+	'use strict';
 
-	  angular.module('application', [
-	    'ui.router',
-	    'ngAnimate',
+	angular.module('application', [
+	  'ui.router',
+	  'ngAnimate',
 
-	    //foundation
-	    'foundation',
-	    'foundation.dynamicRouting',
-	    'foundation.dynamicRouting.animations'
-	  ])
-	    .config(config)
-	    .run(run)
-	  ;
+	  //foundation
+	  'foundation',
+	  'foundation.dynamicRouting',
+	  'foundation.dynamicRouting.animations'
+	])
+	  .config(config)
+	  .run(run)
+	;
 
-	  config.$inject = ['$urlRouterProvider', '$locationProvider'];
+	config.$inject = ['$urlRouterProvider', '$locationProvider'];
 
-	  function config($urlProvider, $locationProvider) {
-	    $urlProvider.otherwise('/');
+	function config($urlProvider, $locationProvider) {
+	  $urlProvider.otherwise('/');
 
-	    $locationProvider.html5Mode({
-	      enabled:false,
-	      requireBase: false
-	    });
+	  $locationProvider.html5Mode({
+	    enabled:false,
+	    requireBase: false
+	  });
 
-	    $locationProvider.hashPrefix('!');
-	  }
+	  $locationProvider.hashPrefix('!');
+	}
 
-	  function run() {
-	    FastClick.attach(document.body);
-	  }
+	function run() {
+	  FastClick.attach(document.body);
+	}
 
-	  __webpack_require__(1);
-	  __webpack_require__(4);
-	  __webpack_require__(7);
+	__webpack_require__(1);
+	__webpack_require__(3);
+	__webpack_require__(6);
+	__webpack_require__(9);
 
-
+	  
 
 /***/ },
 /* 1 */
@@ -88,8 +89,39 @@
 
 	'use strict';
 
-	var genericController = __webpack_require__(2);
-	var beerCtrl = __webpack_require__(3);
+	angular.module('application')
+	    .service('apiService', __webpack_require__(2));
+
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var ApiService = function($http){
+	  this.$http = $http;
+	  this.url = "/beer/";
+	};
+
+	ApiService.prototype.getBeerData = function(){
+
+	  // return promise for controller to use
+	  return this.$http.get(this.url);
+
+	};
+
+	module.exports = ApiService;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var genericController = __webpack_require__(4);
+	var beerCtrl = __webpack_require__(5);
 
 	angular.module('application')
 		.controller('FilmsCtrl', function($scope, $state, $http){
@@ -115,7 +147,7 @@
 		});
 
 /***/ },
-/* 2 */
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -131,10 +163,7 @@
 	      queryParams = {
 	        cache: true
 	      };
-	    // var urlApi = "http://api.brewerydb.com/v2/?key=7c1b5905b50b778751d381cd69ff2b90"+multiple+"/"+$scope.id+"?page="+$scope.page,
-	    //   queryParams = {
-	    //     cache: true
-	    //   };
+	  
 
 	    if (window.location.hostname.match('aerobaticapp')) {
 	      queryParams = {
@@ -206,108 +235,45 @@
 	module.exports = genericController;
 
 /***/ },
-/* 3 */
-/***/ function(module, exports) {
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var beerCtrl = function ($scope, $state, $http, multiple, single){
+	var apiService = __webpack_require__(1);
 
-	    // Grab URL parameters
-	    $scope.id = ($state.params.id || '');
-	    $scope.page = ($state.params.p || 1);
+	var beerCtrl = function(apiService){
 
-	    // Use Aerobatic's caching if we're on that server
-	    // var urlApi = "http://swapi.co/api/"+multiple+"/"+$scope.id+"?page="+$scope.page,
-	    //   queryParams = {
-	    //     cache: true
-	    //   };
-	    var urlApi = "https://api.brewerydb.com/v2/beers?styleId=93&abv=6&key=7c1b5905b50b778751d381cd69ff2b90",
-	      queryParams = {
-	        cache: true
-	      };
+	    this.test = "mmmmm... Beeeeer.";
+	    this.apiService = apiService;
+	    this.wikiData;
 
-	    // if (window.location.hostname.match('aerobaticapp')) {
-	    //   queryParams = {
-	    //     params: {
-	    //       url: urlApi,
-	    //       cache: 1,
-	    //       ttl: 30000 // cache for 500 minutes
-	    //     }
-	    //   }
-	    //   urlApi = '/proxy';
-	    // }
+	    this.getData;
+	};
 
-	    if ($scope.page == 1) {
-	      if ($scope.id != '') {
-	        // We've got a URL parameter, so let's get the single entity's data
-	        $http.get(urlApi, queryParams)
-	          .success(function(data) {
-	            // The HTTP GET only works if it's referencing an ng-repeat'ed array for some reason...
-	            if (data.homeworld) data.homeworld = [data.homeworld];
+	beerCtrl.prototype.getData = function(){
+	    var self = this;
+	    this.apiService.getBeerData().then(function(response){
+	        console.log('response');
+	        self.wikiData = response.data.people;
+	    });
+	};
 
-	            $scope[single] = data;
-
-	            var name = data.name;
-	            if (single == 'beer') name = data.title;
-	            // Get an image from a Google Custom Search (this API key only works on localhost & aerobaticapp.com)
-	            var googleUrl = 'https://www.googleapis.com/customsearch/v1?cx=001000040755652345309%3Aosltt3fexvk&q='+encodeURIComponent(name)+'&imgSize=large&num=1&fileType=jpg&key=AIzaSyBDvUGYCJfOyTNoJzk-5P9vE-dllx-Wne4',
-	              googleParams = { cache: true };
-
-	            if (window.location.hostname.match('aerobaticapp')) {
-	              googleParams = {
-	                params: {
-	                  url: googleUrl,
-	                  cache: 1,
-	                  ttl: 300000 // cache for 5000 minutes
-	                }
-	              }
-	              googleUrl = '/proxy';
-	            }
-
-	            $http.get(googleUrl, googleParams)
-	            .then(function(data) {
-	              $scope.imageUrl = data.data.items[0].pagemap.cse_image[0].src;
-	            }, function(err) {
-	              $scope.imageUrl = "Unknown";
-	            });
-	          })
-
-	      } else {
-	        // We're on page 1, so thet next page is 2.
-	        $http.get(urlApi, queryParams)
-	        .success(function(data) {
-	          $scope[multiple] = data;
-	          if (data['next']) $scope.nextPage = 2;
-	        });
-	      }
-	    } else {
-	      // If there's a next page, let's add it. Otherwise just add the previous page button.
-	      $http.get(urlApi, queryParams)
-	      .success(function(data) {
-	        $scope[multiple] = data;
-	        if (data['next']) $scope.nextPage = 1*$scope.page + 1;
-	      });
-	      $scope.prevPage = 1*$scope.page - 1;
-	    }
-	    return $scope;
-
-	}
 
 	module.exports = beerCtrl;
 
 /***/ },
-/* 4 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	angular.module('application')
-	    .filter('capitalize', __webpack_require__(5))
-	    .filter('lastdir', __webpack_require__(6));
+	    .filter('capitalize', __webpack_require__(7))
+	    .filter('lastdir', __webpack_require__(8));
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -327,7 +293,7 @@
 	module.exports = capitalize;
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -344,16 +310,16 @@
 	module.exports = lastdir;
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	angular.module('application')
-	    .directive("getProp", __webpack_require__(8));
+	    .directive("getProp", __webpack_require__(10));
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';

@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 var beerSchema = new mongoose.Schema({
-    name: String,
+    name: String
 
 });
 

@@ -45,7 +45,7 @@ var paths = {
   ],
   // These files are for your app's JavaScript
   appJS: [
-    'client/assets/js/app.js'
+    'client/assets/js/*.js'
   ]
 }
 
@@ -117,7 +117,7 @@ gulp.task('sass', function () {
 });
 
 // Compiles and copies the Foundation for Apps JavaScript, as well as your app's custom JS
-gulp.task('uglify', ['uglify:foundation', 'uglify:app'])
+gulp.task('uglify', ['uglify:foundation', 'uglify:app']);
 
 gulp.task('uglify:foundation', function(cb) {
   var uglify = $.if(isProduction, $.uglify()
@@ -148,7 +148,7 @@ gulp.task('uglify:app', function() {
 gulp.task('webpack', function() {
   return gulp.src(paths.appJS)
     .pipe(webpack( require('./webpack.config.js') ))
-    .pipe(gulp.dest('./build/assets/js/'));
+    .pipe(gulp.dest('./public/assets/js/'));
 });
 
 // Starts a test server, which you can view at http://localhost:8079
