@@ -22,6 +22,12 @@ angular.module('application')
 	.controller('VehiclesCtrl', function($scope, $state, $http){
 		$scope = genericController($scope, $state, $http, 'vehicles', 'vehicle');
 	})
-	.controller('beerCtrl', function($scope, $state, $http){
-		$scope = beerCtrl($scope, $state, $http, 'beers', 'beers');
-	});
+	.controller('beerCtrl', beerCtrl);
+
+	beerCtrl.prototype.getData = function(){
+    var self = this;
+    this.apiService.getBeerData().then(function(response){
+        console.log('response');
+        self.wikiData = response.data.people;
+    });
+};

@@ -2,7 +2,7 @@
 
 var ApiService = function($http){
   this.$http = $http;
-  this.url = "/beer/";
+  this.url = "/beers/";
 };
 
 ApiService.prototype.getBeerData = function(){

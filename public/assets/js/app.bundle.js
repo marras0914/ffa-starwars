@@ -102,7 +102,7 @@
 
 	var ApiService = function($http){
 	  this.$http = $http;
-	  this.url = "/beer/";
+	  this.url = "/beers/";
 	};
 
 	ApiService.prototype.getBeerData = function(){
@@ -142,9 +142,15 @@
 		.controller('VehiclesCtrl', function($scope, $state, $http){
 			$scope = genericController($scope, $state, $http, 'vehicles', 'vehicle');
 		})
-		.controller('beerCtrl', function($scope, $state, $http){
-			$scope = beerCtrl($scope, $state, $http, 'beers', 'beers');
-		});
+		.controller('beerCtrl', beerCtrl);
+
+		beerCtrl.prototype.getData = function(){
+	    var self = this;
+	    this.apiService.getBeerData().then(function(response){
+	        console.log('response');
+	        self.wikiData = response.data.people;
+	    });
+	};
 
 /***/ },
 /* 4 */
@@ -236,11 +242,9 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
-
-	var apiService = __webpack_require__(1);
 
 	var beerCtrl = function(apiService){
 
@@ -251,13 +255,7 @@
 	    this.getData;
 	};
 
-	beerCtrl.prototype.getData = function(){
-	    var self = this;
-	    this.apiService.getBeerData().then(function(response){
-	        console.log('response');
-	        self.wikiData = response.data.people;
-	    });
-	};
+
 
 
 	module.exports = beerCtrl;
