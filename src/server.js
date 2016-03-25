@@ -20,7 +20,7 @@ server.use('/', express.static('public'));
 var apiProxy = httpProxy.createProxyServer();
 console.log('Forwarding API request tp ' + apiForwardingUrl);
 
-server.all('/beer/*', function(req, res){
+server.all('/beers/*', function(req, res){
     
     apiProxy.web(req, res, {target: apiForwardingUrl});
     console.log('request made to /beer/');
